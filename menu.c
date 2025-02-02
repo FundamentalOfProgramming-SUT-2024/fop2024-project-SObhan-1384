@@ -67,6 +67,7 @@ typedef struct{
     time_t start_payam;//*
     int payam;//*
     int tabaghe;
+    int playing;
 }Game;
 
 void start_game(Game * g);
@@ -92,22 +93,25 @@ void lose_page(Game *g);
 void treasure_room(Game * g);
 
 Mix_Music * moosighi;
-int playing;
 
 void play_music(Game * g){
     Mix_OpenAudio (44100 , MIX_DEFAULT_FORMAT , 2 , 2048);
-    if(playing == 1){
+    if(g->playing == 1){
         if(g->song == 0){
-            moosighi = Mix_LoadMUS("mar.mp3");
+            moosighi = Mix_LoadMUS("sacrifice.mp3");
         }
         if(g->song == 1){
             moosighi = Mix_LoadMUS("carryonwaywardson.mp3");
         }
+        if(g->song == 2){
+            moosighi = Mix_LoadMUS("mar.mp3");
+        }
+        Mix_PlayMusic(moosighi , -1);
     }
     else{
+        Mix_PlayMusic(moosighi , -1);
         Mix_HaltMusic();
     }
-    Mix_PlayMusic(moosighi , -1); 
 
 }
 
@@ -232,7 +236,7 @@ int first_menu(Game *g){
 }
 
 void music(Game *g){
-    char *song[2]= {"Sacrifice, The Weeknd" , "Carry on Wayward Son, Kansas" , "Mohreye Mar, Saeed asayesh"};
+    char *song[3]= {"Sacrifice, The Weeknd" , "Carry on Wayward Son, Kansas" , "Mohreye Mar, Saeed asayesh"};
     init_pair(1 , COLOR_MAGENTA, COLOR_BLACK);
     init_pair(3 , COLOR_BLACK , COLOR_YELLOW);
     noecho();
@@ -242,27 +246,38 @@ void music(Game *g){
     while(1){
         attron(COLOR_PAIR(1));
         clear();
-        for(int i = 0 ; i <2 ; i ++){
+        for(int i = 0 ; i <3 ; i ++){
             if(i == choice)
                 attron(A_REVERSE);
             mvprintw(LINES/2 -3 + i , COLS/2 -10 ,"%s" , song[i]);
             if(i == choice)
                 attroff(A_REVERSE);
         }
+        if(g->playing == 0){
+            mvprintw(LINES/2 , COLS/2 - 5, "Music: OFF");
+        }
+        if(g->playing == 1){
+            mvprintw(LINES/2 , COLS/2 - 5, "Music: ON");
+        }
         init_pair(2 , COLOR_BLACK , COLOR_YELLOW);
         attron(COLOR_PAIR(2));
         mvprintw(LINES/2 - 5 , COLS/2 - 10 , "%s" , song[final_choice]);
         attroff(COLOR_PAIR(2));
         attron(COLOR_PAIR(3));
-        mvprintw(LINES/2 - 7 , COLS/2 - 13 , "*** Pess 'q' to exit ***");
+        mvprintw(LINES/2 - 7 , COLS/2 - 11 , "*** Pess 'q' to exit ***");
         attroff(COLOR_PAIR(3));
         int a = getch();
         if(a == 'q'){
             settings(g);
             break;
         }
-        if((a == KEY_UP) || (a== KEY_DOWN))
-            choice = (choice + 1)%2;
+        if((a == KEY_UP))
+            choice = (choice + 2)%3;
+        if((a == KEY_DOWN))
+            choice = (choice + 1)%3;
+        if(a == 'x'){
+            g->playing = (g->playing +1)%2;
+        }
         if(a == '\n'){
             final_choice = choice;
             g->song = final_choice;
@@ -552,6 +567,8 @@ void second_menu(Game *rogue){
     if(choice == 2)
         scoreboard(rogue);
     if(choice == 0){
+        rogue->end = 0;
+        rogue->tabaghe = 0;
         start_game(rogue);
     }
     
@@ -1789,6 +1806,7 @@ void handle_weapon(Game * g){
                 }
                 if(shelik == 0){
                     g->map[loc_to_int(g->player) + 5] = 'b';
+                    g->selah[1] -= 1;
                 }
             }
 
@@ -1845,6 +1863,7 @@ void handle_weapon(Game * g){
                     } 
                 }
                 if(shelik == 0){
+                    g->selah[1] -= 1;
                     g->map[loc_to_int(g->player) + 5*COLS] = 'b';
                 }
             
@@ -1874,6 +1893,7 @@ void handle_weapon(Game * g){
                     } 
                 }
                 if(shelik == 0){
+                    g->selah[1] -= 1;
                     g->map[loc_to_int(g->player) - 5*COLS] = 'b';
                 }
             }
@@ -1915,6 +1935,7 @@ void handle_weapon(Game * g){
                     } 
                 }
                 if(shelik == 0){
+                    g->selah[2] -= 1;
                     g->map[loc_to_int(g->player) + 10] = 'c';
                 }
             }
@@ -1944,6 +1965,7 @@ void handle_weapon(Game * g){
                     } 
                 }
                 if(shelik == 0){
+                    g->selah[2] -= 1;
                     g->map[loc_to_int(g->player) - 10] = 'c';
                 }
             }
@@ -1973,6 +1995,7 @@ void handle_weapon(Game * g){
                     } 
                 }
                 if(shelik == 0){
+                    g->selah[2] -= 1;
                     g->map[loc_to_int(g->player) + 10*COLS] = 'c';
                 }
             }
@@ -2002,6 +2025,7 @@ void handle_weapon(Game * g){
                     } 
                 }
                 if(shelik == 0){
+                    g->selah[2] -= 1;
                     g->map[loc_to_int(g->player) - 10*COLS] = 'c';
                 }
             }
@@ -2040,6 +2064,7 @@ void handle_weapon(Game * g){
                     } 
                 }
                 if(shelik == 0){
+                    g->selah[4] -= 1;
                     g->map[loc_to_int(g->player) + 5] = 'd';
                 }
             }
@@ -2068,6 +2093,7 @@ void handle_weapon(Game * g){
                     } 
                 }
                 if(shelik == 0){
+                    g->selah[4] -= 1;
                     g->map[loc_to_int(g->player) - 5] = 'd';
                 }
             }
@@ -2097,6 +2123,7 @@ void handle_weapon(Game * g){
                     } 
                 }
                 if(shelik == 0){
+                    g->selah[4] -= 1;
                     g->map[loc_to_int(g->player) + 5*COLS] = 'd';
                 }
             }
@@ -2125,6 +2152,7 @@ void handle_weapon(Game * g){
                     } 
                 }
                 if(shelik == 0){
+                    g->selah[4] -= 1;
                     g->map[loc_to_int(g->player) - 5*COLS] = 'd';
                 }
             }
@@ -2405,6 +2433,7 @@ void start_game_normal(Game *g){
     g->end = 0;
     g->cheat = 0;
     g->enemy_num = 0;
+    g->payam = 0;
     g->enemy = calloc(30 , sizeof(doshman));
     clear();
     timeout(250);
@@ -2432,6 +2461,7 @@ void start_game_spell(Game *g){
     g->end = 0;
     g->cheat = 0;
     g->enemy_num = 0;
+    g->payam = 0;
     g->enemy = calloc(30 , sizeof(doshman));
     clear();
     random_map(g , 1 , 0);
@@ -2458,6 +2488,7 @@ void start_game_treasure(Game *g){
     g->end = 0;
     g->cheat = 0;
     g->enemy_num = 0;
+    g->payam = 0;
     g->enemy = calloc(30 , sizeof(doshman));
     clear();
     random_map(g , 0 , 1);
@@ -2503,6 +2534,7 @@ void easy_game(Game *g){
         g->current_telesm = -1;
         g->enemy_num = 0;
         g->enemy = calloc(30 , sizeof(doshman));
+        g->payam = 0;
     }
     if((g->end != 1) && (g->tabaghe == 0))
         start_game_normal(g);
@@ -2540,6 +2572,7 @@ void medium_game(Game * g){
         g->current_telesm = -1;
         g->enemy_num = 0;
         g->enemy = calloc(30 , sizeof(doshman));
+        g->payam = 0;
     }
 
     if((g->end != 1) && (g->tabaghe == 0))
@@ -2580,6 +2613,7 @@ void hard_game(Game *g){
         g->current_telesm = -1;
         g->enemy_num = 0;
         g->enemy = calloc(30 , sizeof(doshman));
+        g->payam = 0;
     }
 
     if((g->end != 1) && (g->tabaghe == 0))
@@ -2595,7 +2629,6 @@ void hard_game(Game *g){
 }
 
 void start_game(Game *g){
-    playing = 1;
     if(g->tabaghe == -1)
         g->tabaghe = 0;
     play_music(g);
@@ -2609,7 +2642,6 @@ void start_game(Game *g){
 }
 
 void win_page(Game *g){
-    playing = 0;
     g->tabaghe = 0;
 
     if(g->name[0] != 0){
@@ -2757,7 +2789,6 @@ void draw_health(Game *g){
     mvprintw(LINES - 1 , COLS/2 + 30 , "%d%%" , g->hunger*10);
     
     if(g->health <= 0){
-        playing = 0;
         g->tabaghe = 0;
         lose_page(g);
     }
@@ -3110,8 +3141,6 @@ void saving(Game *g){
 
 void resume_game(Game * g){
 
-    playing = 1;
-
     char *filename = calloc(60 , sizeof(char));
     for(int i = 0 ; i < strlen(g->name) ; i++)
         filename[i] = g->name[i];
@@ -3139,7 +3168,7 @@ void resume_game(Game * g){
 
     g->cheat = 0;
     g->start_payam = time(NULL);
-    g->payam = -1;
+    g->payam = 0;
 
     g->end = 0;
 
@@ -3342,6 +3371,8 @@ void printf_payam(Game * g){
             mvprintw(1 , 2 , "!*!*! YOUR BLOW HIT THE ENEMY !*!*!");
         if(n == 6)
             mvprintw(1 , 2 , "!*!*! YOU DON'T HAVE ENOUGH WEAPONS !*!*!");
+        if(n == 7)
+            mvprintw(1 , 2 , "!*!*! First choose your weapon !*!*!");
 
     }
     attroff(COLOR_PAIR(50));
@@ -3548,7 +3579,7 @@ int main(){
     g.start_payam = time(NULL);
     g.payam = -1;
     g.tabaghe = 0;
-    playing = 0;
+    g.playing = 0;
     keypad(stdscr, TRUE);
     first_menu(&g);
     keypad(stdscr , TRUE);

@@ -208,6 +208,11 @@ int first_menu(Game *g){
     int choice = 0;
     while(1){
         clear();
+        mvprintw(LINES/2 - 10 , COLS/2 - 17 , " ____    ___    ____  _   _  _____");
+        mvprintw(LINES/2 - 9 , COLS/2 - 17 , "|  _ \\  / _ \\  / ___|| | | || ____|");
+        mvprintw(LINES/2 - 8 , COLS/2 - 17 , "| |_) || | | || |  _ | | | ||  _|  ");
+        mvprintw(LINES/2 - 7 , COLS/2 - 17 , "|  _ < | |_| || |_| || |_| || |___ ");
+        mvprintw(LINES/2 - 6 , COLS/2 - 17 , "|_| \\_\\ \\___/  \\____| \\___/ |_____|");
         for(int i = 0 ; i<3 ; i++){
             if(i == choice)
                 attron(A_REVERSE);
@@ -2661,9 +2666,16 @@ void win_page(Game *g){
 
     Mix_HaltMusic();
     clear();
-    mvprintw(LINES/2 -3 , COLS/2 - 3 , "YOU WIN");
+    mvprintw(LINES/2 - 10 , COLS/2 - 34 ,"/==================================================================\\");
+    mvprintw(LINES/2 - 9 , COLS/2 - 34 , "||        _  __   _____  _   _  __        _____ _   _   _         ||");
+    mvprintw(LINES/2 - 8 , COLS/2 - 34 , "||__/\\__ | | \\ \\ / / _ \\| | | | \\ \\      / |_ _| \\ | | | | __/\\__ ||");
+    mvprintw(LINES/2 - 7 , COLS/2 - 34 , "||\\    / | |  \\ V | | | | | | |  \\ \\ /\\ / / | ||  \\| | | | \\    / ||");
+    mvprintw(LINES/2 - 6 , COLS/2 - 34 , "||/_  _\\ |_|   | || |_| | |_| |   \\ V  V /  | || |\\  | |_| /_  _\\ ||");
+    mvprintw(LINES/2 - 5 , COLS/2 - 34 , "||  \\/   (_)   |_| \\___/ \\___/     \\_/\\_/  |___|_| \\_| (_)   \\/   ||");
+    mvprintw(LINES/2 - 4 , COLS/2 - 34 , "\\==================================================================/");
+    //mvprintw(LINES/2 -3 , COLS/2 - 3 , "YOU WIN");
     if(g->name[0] != '\0'){
-        mvprintw(LINES/2 - 1 , COLS/2 - 17, "%s   Points:%d   Golds:%d" , g->name , g->point , g->golds);
+        mvprintw(LINES/2 - 1 , COLS/2 - 13, "%s   Points:%d   Golds:%d" , g->name , g->point , g->golds);
         FILE *file = fopen("users.txt" , "r");
         char line[200];
         char user[56];
@@ -2680,7 +2692,7 @@ void win_page(Game *g){
     }
 
     else{
-        mvprintw(LINES/2 - 1 , COLS/2 - 17, "Guest   Points:%d   Golds:%d" , g->point , g->golds);
+        mvprintw(LINES/2 - 1 , COLS/2 - 13, "Guest   Points:%d   Golds:%d" , g->point , g->golds);
     }
 
 

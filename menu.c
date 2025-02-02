@@ -91,6 +91,8 @@ void handle_weapon(Game * g);
 void printf_payam(Game * g);
 void lose_page(Game *g);
 void treasure_room(Game * g);
+void profile(Game * g);
+
 
 Mix_Music * moosighi;
 
@@ -566,6 +568,9 @@ void second_menu(Game *rogue){
     }
     if(choice == 4){
         settings(rogue);
+    }
+    if(choice == 3){
+        profile(rogue);
     }
     if(choice == 1)
         resume_game(rogue);
@@ -3569,6 +3574,93 @@ void treasure_room(Game * g){
             break;   
     }
     refresh();
+}
+
+void profile(Game * g){
+    clear();
+    if(g->name[0] == '\0'){
+        mvprintw(LINES/2 - 11 , COLS/2 - 29  ,"       (**)                                         (**)");
+        mvprintw(LINES/2 - 10 , COLS/2 - 29 , "       IIII                                         IIII");
+        mvprintw(LINES/2 - 9 , COLS/2 - 29 , "       ####                                         ####");
+        mvprintw(LINES/2 - 8 , COLS/2 - 29 , "       HHHH          Please sign in to show         HHHH");
+        mvprintw(LINES/2 - 7 , COLS/2 - 29 , "       HHHH            your informations            HHHH");
+        mvprintw(LINES/2 - 6 , COLS/2 - 29 , "       ####                                         ####");
+        mvprintw(LINES/2 - 5 , COLS/2 - 29 , "    ___IIII___                                   ___IIII___");
+        mvprintw(LINES/2 - 4 , COLS/2 - 29 , " .-`_._'**'_._`-.                             .-`_._'**'_._`-.");
+        mvprintw(LINES/2 - 3 , COLS/2 - 29 , "|/``  .`\\/`.  ``\\|                           |/``  .`\\/`.  ``\\|");
+        mvprintw(LINES/2 - 2 , COLS/2 - 29 , "`     }    {     '                           `     }    {  ");
+        mvprintw(LINES/2 - 1 , COLS/2 - 29 , "      ) () (                                       ) () (");
+        mvprintw(LINES/2  , COLS/2 - 29 , "      ( :: )                                       ( :: )");
+        mvprintw(LINES/2 +1 , COLS/2 - 29 , "      | :: |                                       | :: |");
+        mvprintw(LINES/2 +2 , COLS/2 - 29 , "      | )( |                                       | )( |");
+        mvprintw(LINES/2 + 3 , COLS/2 - 29 , "      | || |                                       | || |");
+        mvprintw(LINES/2 + 4 , COLS/2 - 29 , "      | || |                                       | || |");
+        mvprintw(LINES/2 + 5 , COLS/2 - 29 , "      | || |                                       | || |");
+        mvprintw(LINES/2 + 6 , COLS/2 - 29 , "      | || |                                       | || |");
+        mvprintw(LINES/2 + 7 , COLS/2 - 29 , "      | || |                                       | || |");
+        mvprintw(LINES/2 + 8 , COLS/2 - 29 , "      ( () )                                       ( () )");
+        mvprintw(LINES/2 + 9 , COLS/2 - 29 , "       \\  /                                         \\  /");
+        mvprintw(LINES/2 + 10 , COLS/2 - 29 , "        \\/                                           \\/");
+    }
+    else{
+        int scores;
+        int golds;
+        char pass[55];
+        char email[55];
+
+        int line_counter = 0;
+
+        FILE * file = fopen("users.txt" , "r");
+        char line[200];
+        int tala = 0;
+        int emtiaz = 0;
+        int tajrobe = -1;
+        while(fgets(line , 200 , file)){
+            char *esm = malloc(55 * sizeof(char));
+            sscanf(line , "%s %s %s %d %d" , esm , pass , email , &scores , &golds);
+            if(strcmp(g->name , esm) == 0){
+                tajrobe += 1;
+                tala += golds;
+                emtiaz += scores;
+            }
+        }
+        
+        mvprintw(LINES/2 - 11 , COLS/2 - 29  ,"       (**)                                         (**)");
+        mvprintw(LINES/2 - 10 , COLS/2 - 29 , "       IIII                                         IIII");
+        mvprintw(LINES/2 - 9 , COLS/2 - 29 , "       ####                                         ####");
+        mvprintw(LINES/2 - 8 , COLS/2 - 29 , "       HHHH                USERNAME:                HHHH");
+        mvprintw(LINES/2 - 7 , COLS/2 - 29 , "       HHHH                                         HHHH");
+        mvprintw(LINES/2 - 7 , COLS/2 - 29 , "       HHHH                 %s" , g->name);
+        mvprintw(LINES/2 - 6 , COLS/2 - 29 , "       ####                                         ####");
+        mvprintw(LINES/2 - 5 , COLS/2 - 29 , "    ___IIII___                                   ___IIII___");
+        mvprintw(LINES/2 - 4 , COLS/2 - 29 , " .-`_._'**'_._`-.                             .-`_._'**'_._`-.");
+        mvprintw(LINES/2 - 3 , COLS/2 - 29 , "|/``  .`\\/`.  ``\\|                           |/``  .`\\/`.  ``\\|");
+        mvprintw(LINES/2 - 2 , COLS/2 - 29 , "`     }    {     '                           `     }    {  ");
+        mvprintw(LINES/2 - 1 , COLS/2 - 29 , "      ) () (                                       ) () (");
+        mvprintw(LINES/2 - 1 , COLS/2 - 29 , "                       Experience: %d" , tajrobe);
+        mvprintw(LINES/2  , COLS/2 - 29 , "      ( :: )                                       ( :: )");
+        mvprintw(LINES/2 +1 , COLS/2 - 29 , "      | :: |                                       | :: |");
+        mvprintw(LINES/2 +1 , COLS/2 - 29 , "      | :: |           Total Golds: %d" , tala);
+        mvprintw(LINES/2 +2 , COLS/2 - 29 , "      | )( |                                       | )( |");
+        mvprintw(LINES/2 + 3 , COLS/2 - 29 , "      | || |                                       | || |");
+        mvprintw(LINES/2 + 3 , COLS/2 - 29 , "      | || |          Total points: %d" , emtiaz);
+        mvprintw(LINES/2 + 4 , COLS/2 - 29 , "      | || |                                       | || |");
+        mvprintw(LINES/2 + 5 , COLS/2 - 29 , "      | || |                                       | || |");
+        mvprintw(LINES/2 + 6 , COLS/2 - 29 , "      | || |                                       | || |");
+        mvprintw(LINES/2 + 7 , COLS/2 - 29 , "      | || |                                       | || |");
+        mvprintw(LINES/2 + 8 , COLS/2 - 29 , "      ( () )                                       ( () )");
+        mvprintw(LINES/2 + 9 , COLS/2 - 29 , "       \\  /                                         \\  /");
+        mvprintw(LINES/2 + 10 , COLS/2 - 29 , "        \\/                                           \\/");
+
+
+    }
+    while(1){
+        char a = getch();
+        if(a == 'q'){
+            break;
+        }
+    }
+    second_menu(g);
 }
 
 

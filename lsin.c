@@ -225,8 +225,8 @@ void sign_username(char name[55]){
 
 int password_exist(char *username , char *password){
     FILE *file = fopen("users.txt" , "r");
-    char line[110];
-    while(fgets(line , 110 , file)){
+    char line[200];
+    while(fgets(line , 200 , file)){
         char pass[55];
         char name[55];
         sscanf(line , "%s %s" , name , pass);
@@ -244,6 +244,7 @@ void sign_password(char *username , char *password){
     while(1){
         attron(COLOR_PAIR(1));
         mvprintw(LINES/2 -3 , COLS/2 - 18 , "Enter Your Password: ");
+        mvprintw(LINES/2 - 1 , COLS/2 - 24 , "If you have forgottenn your password, type help");
         attroff(COLOR_PAIR(1));
         init_color(2 , 220 , 208 , 255);
         init_pair(2 , 2 , COLOR_YELLOW);
@@ -256,7 +257,21 @@ void sign_password(char *username , char *password){
         mvscanw(LINES/2 - 3 , COLS/2 + 3,"%s" , password);
         curs_set(FALSE);
         noecho();
-        if(password_exist(username , password) == 0){
+        if(strcmp("help" , password) == 0){
+            FILE * file = fopen("users.txt" , "r");
+            char line[200];
+            while(fgets(line , 200 , file)){
+                char user[55];
+                char pass[55];
+                sscanf(line , "%s %s" , user , pass);
+                if(strcmp(user , username) == 0){
+                    clear();
+                    mvprintw(LINES/2 - 5 , COLS/2 - 14 , "Your password starts with %c%c" , pass[0] , pass[1]);
+                    break;
+                }
+            }
+        }
+        else if(password_exist(username , password) == 0){
             clear();
             attron(A_BLINK );
             mvprintw(LINES/2 - 5 , COLS/2 - 23 , "!*!*! The password entered is incorrect !*!*!");

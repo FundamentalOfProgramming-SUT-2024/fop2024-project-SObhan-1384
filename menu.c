@@ -1398,10 +1398,14 @@ void handle_move(Game *g){
                 break;
             } 
             if(g->map[loc_to_int(g->player)] == 'P'){
-                win_page(g);
-                g->end = 1;
+                g->end = 2;
+                treasure_room(g);
                 break;
             }  
+            if(g->map[loc_to_int(g->player)] == 'Q'){
+                win_page(g);
+                g->end =1;
+            }
             if(g->under_map[loc_to_int(g->player)] == 'x'){
                 g->map[loc_to_int(g->player)] = '^';
                 g->under_map[loc_to_int(g->player)] = 'T';
@@ -1436,6 +1440,8 @@ void handle_move(Game *g){
         g->end =2;
     }
     if(g->map[loc_to_int(g->player)] == 'Q'){
+        g->golds += 30;
+        g->point += 100;
         win_page(g);
         g->end =1;
     }
@@ -2923,8 +2929,11 @@ void draw_health(Game *g){
     if(check >= 10){
         g->current_telesm = -1;
     }
+
     if(g->hunger > 10)
         g->hunger = 10;
+    if(g->health > 60)
+        g->health = 60;
 
     if((check < 10)&&(g->current_telesm == 0)){
         if(timer_health >= 1){
@@ -3181,20 +3190,22 @@ void food_menu(Game *g){
                         g->current_telesm = 1;
 
                     g->ghazaha[choice + 1] -= 1;
-                    g->hunger += 2;
+                    g->hunger += 5;
+                    g->health += 5;
                     g->start_telesm = time(NULL);
                     break;
                 }
             }
             if(choice == 0){
                 if((g->ghazaha[0] == 0)&&(g->ghazaha[1] > 0)){
-                    g->health -= 4;
+                    g->health -= 5;
                     g->hunger -= 1;
                     g->ghazaha[1] -= 1;
                     break;
                 }
                 else if((g->ghazaha[0] > 0)&&(g->ghazaha[1] == 0)){
-                    g->hunger += 3;
+                    g->hunger += 4;
+                    g->health += 5;
                     g->ghazaha[0] -= 1;
                     break;
                 }
@@ -3202,7 +3213,8 @@ void food_menu(Game *g){
                 else if ((g->ghazaha[0] > 0)&&(g->ghazaha[1] > 0)){
                     int random_ghaza = rand()%2;
                     if(random_ghaza == 0){
-                        g->hunger += 2;
+                        g->hunger += 4;
+                        g->health += 5;
                         g->ghazaha[0] -= 1;
                     }
                     else if(random_ghaza == 1){
@@ -3905,7 +3917,6 @@ void profile(Game * g){
     }
     second_menu(g);
 }
-
 
 int main(){
     setlocale(LC_ALL,"");

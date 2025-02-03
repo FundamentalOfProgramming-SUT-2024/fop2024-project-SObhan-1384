@@ -1507,7 +1507,7 @@ void handle_move(Game *g){
             g->selah[4] += 1;
             g->map[loc_to_int(g->player)] = '.';
             g->payam = 8;
-            g->start_payam = time(NULL);
+            g->start_payam = time(NULL);    
         }
         else if(g->map[loc_to_int(g->player)] == '0'){
             g->telesmha[0] += 1;
@@ -1623,6 +1623,7 @@ void handle_enemy(Game * g){
                 if(((g->player.x - buffer.x)*(g->player.x - buffer.x) <= 1) && ((g->player.y - buffer.y)*(g->player.y - buffer.y) <= 1)){
                     g->health -= 3;
                     g->payam = 3;
+                    g->start_payam = time(NULL);
                 }
             }
 
@@ -1655,6 +1656,7 @@ void handle_enemy(Game * g){
                 if(((g->player.x - buffer.x)*(g->player.x - buffer.x) <= 1) && ((g->player.y - buffer.y)*(g->player.y - buffer.y) <= 1)){
                     g->health -= 5;
                     g->payam = 3;
+                    g->start_payam = time(NULL);
                 }
             }
 
@@ -1689,6 +1691,7 @@ void handle_enemy(Game * g){
                 if(((g->player.x - buffer.x)*(g->player.x - buffer.x) <= 1) && ((g->player.y - buffer.y)*(g->player.y - buffer.y) <= 1)){
                     g->health -= 8;
                     g->payam = 3;
+                    g->start_payam = time(NULL);
                 }
             }
 
@@ -1721,6 +1724,7 @@ void handle_enemy(Game * g){
                 if(((g->player.x - buffer.x)*(g->player.x - buffer.x) <= 1) && ((g->player.y - buffer.y)*(g->player.y - buffer.y) <= 1)){
                     g->health -= 10;
                     g->payam = 3;
+                    g->start_payam = time(NULL);
                 }
             }
 
@@ -1754,6 +1758,7 @@ void handle_enemy(Game * g){
                 if(((g->player.x - buffer.x)*(g->player.x - buffer.x) <= 1) && ((g->player.y - buffer.y)*(g->player.y - buffer.y) <= 1)){
                     g->health -= 15;
                     g->payam = 3;
+                    g->start_payam = time(NULL);
                 }
             }
 
@@ -1836,7 +1841,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 12;
                             i = 10;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -1870,7 +1875,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 12;
                             i = 10;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -1904,7 +1909,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 12;
                             i = 10;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -1939,7 +1944,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 12;
                             i = 10;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -1986,7 +1991,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 15;
                             i = 20;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -2021,7 +2026,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 15;
                             i = 20;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -2056,7 +2061,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 15;
                             i = 20;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -2091,7 +2096,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 15;
                             i = 20;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -2135,7 +2140,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 5;
                             i = 10;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -2169,7 +2174,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 5;
                             i = 10;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -2203,7 +2208,7 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 5;
                             i = 10;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -2238,7 +2243,7 @@ void handle_weapon(Game * g){
                             shelik = 1;
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 5;
-                            if(g->enemy[i].joon < 1){
+                            if(g->enemy[j].joon < 1){
                                 g->payam = 9;
                                 g->point += 5;
                                 g->start_payam = time(NULL);
@@ -2547,8 +2552,41 @@ void draw_map(Game *g){
                 mvprintw(i/COLS , i%COLS , "%s" , "\U0000039E");//jadooie      
         }   
     }
-    mvprintw(LINES -1 , 1, "You have %d golds" , g->golds);
-    mvprintw(LINES -1 , 30 , "You have %d points" , g->point);
+    init_color(52 , 124 , 255 , 2);
+    init_pair(120 , 52 , COLOR_BLACK);
+    //rgb(124, 255, 218)
+    attron(COLOR_PAIR(120));
+    int n = g->payam;
+    mvprintw(LINES - 3, 1 , "┌");
+    mvprintw(LINES -1 , 1 , "└");
+    mvprintw(LINES - 3 , 35 , "┐");
+    mvprintw(LINES - 1 , 35 , "┘");
+    mvprintw(LINES - 2 , 1 , "│");
+    mvprintw(LINES -2  , 35 , "│");
+    for(int i = 2 ; i<35 ; i++){
+        mvprintw(LINES - 1 , i , "─");
+        mvprintw(LINES - 3 , i , "─");
+    }
+
+    mvprintw(LINES - 3, 99 , "┌");
+    mvprintw(LINES -1 , 99 , "└");
+    mvprintw(LINES - 3 , COLS - 1 , "┐");
+    mvprintw(LINES - 1 , COLS - 1 , "┘");
+    mvprintw(LINES - 2 , 99 , "│");
+    mvprintw(LINES -2  , COLS - 1 , "│");
+    for(int i = 100 ; i<COLS - 1 ; i++){
+        mvprintw(LINES - 1 , i , "─");
+        mvprintw(LINES - 3 , i , "─");
+    }
+    attroff(COLOR_PAIR(120));
+    char *taslihat[6]= {"Nothing" , "Gorz" , "Khanjar" , "Asaa" , "Shamshir" , "Tir"};
+    char *unicodes[6]= {":(" , "\U00002692" , "\U0001F5E1", "\U0001FA84" , "\U00002694" , "\U000027B3"};
+    mvprintw(LINES - 2 , 100 , "Current weapon: %s %s" , taslihat[g->current_selah + 1] , unicodes[g->current_selah + 1]);
+    char * ability[4] = {"Nothing" , "Nothing" , "Speed" , "Damage"};
+    mvprintw(LINES - 2 , 128 , "Current Ability: %s" , ability[g->current_telesm + 1]);
+
+    mvprintw(LINES -2 , 2 , "Gold : %d" , g->golds);
+    mvprintw(LINES -2 , 18 , "Point : %d" , g->point);
     draw_health(g);
 }
 
@@ -2885,6 +2923,8 @@ void draw_health(Game *g){
     if(check >= 10){
         g->current_telesm = -1;
     }
+    if(g->hunger > 10)
+        g->hunger = 10;
 
     if((check < 10)&&(g->current_telesm == 0)){
         if(timer_health >= 1){
@@ -2946,18 +2986,36 @@ void draw_health(Game *g){
         }
     }
 
-    mvprintw(LINES - 1 , COLS/2 - 18 , "%s Health: " , "\U00002764");
+    init_color(52 , 124 , 255 , 218);
+    init_pair(120 , 52 , COLOR_BLACK);
+    //rgb(124, 255, 218)
+    attron(COLOR_PAIR(120));
+    int n = g->payam;
+    mvprintw(LINES - 3, 36 , "┌");
+    mvprintw(LINES -1 , 36 , "└");
+    mvprintw(LINES - 3 , 98 , "┐");
+    mvprintw(LINES - 1 , 98 , "┘");
+    mvprintw(LINES - 2 , 36 , "│");
+    mvprintw(LINES -2  , 98 , "│");
+    for(int i = 37 ; i<98 ; i++){
+        mvprintw(LINES - 1 , i , "─");
+        mvprintw(LINES - 3 , i , "─");
+    }
+    attroff(COLOR_PAIR(120));
+
+
+    mvprintw(LINES - 2 , 39 , "%s Health: " , "\U00002764");
    
     int percent = (g->health* 10 / 60);
     for(int i = 0 ; i < percent ; i++)
-        mvprintw(LINES - 1 , COLS/2 -8 + i , "%s" , "\u258c");
+        mvprintw(LINES - 2 , 49 + i , "%s" , "\u258c");
 
-    mvprintw(LINES -1 , COLS/2 + 2 , "%d%%" , (g->health*100 /60));
+    mvprintw(LINES -2 , 59 , "%d%%" , (g->health*100 /60));
 
-    mvprintw(LINES - 1 , COLS/2 + 11 , "%sHunger: " , "\U0001F354");
+    mvprintw(LINES - 2 , 68 , "%sHunger: " , "\U0001F354");
     for(int i = 0 ; i < g->hunger ; i++)
-        mvprintw(LINES -1 , COLS/2 + 20 + i , "%s" , "\u258c");
-    mvprintw(LINES - 1 , COLS/2 + 30 , "%d%%" , g->hunger*10);
+        mvprintw(LINES -2 , 78 + i , "%s" , "\u258c");
+    mvprintw(LINES - 2 , 88 , "%d%%" , g->hunger*10);
     
     if(g->health <= 0){
         g->tabaghe = 0;
@@ -3526,27 +3584,47 @@ void printf_payam(Game * g){
     init_color(40 , 0 , 254 , 131);
     init_pair(50 , 40 , COLOR_BLACK);
 //rgb(0, 254, 131)
-    attron(COLOR_PAIR(50));
+    // if(g->map[i] == '|')
+    //             mvprintw(i/COLS , i%COLS , "%s" , "│");
+    // if(g->map[i] == '_')
+    //             mvprintw(i/COLS , i%COLS , "%s" , "─");
+    //rgb(246, 148, 253)
+
+    init_color(51 , 246 , 148 , 253);
+    init_pair(110 , 51 , COLOR_BLACK);
+    attron(COLOR_PAIR(110));
     int n = g->payam;
+    mvprintw(0 , COLS/2 - 22 , "┌");
+    mvprintw(2 , COLS/2 - 22 , "└");
+    mvprintw(0 , COLS/2 + 22 , "┐");
+    mvprintw(2 , COLS/2 + 22 , "┘");
+    mvprintw(1 , COLS/2 - 22 , "│");
+    mvprintw(1 , COLS/2 + 22 , "│");
+    for(int i = COLS/2 - 21 ; i<COLS/2 + 22 ; i++){
+        mvprintw(0 , i , "─");
+        mvprintw(2 , i , "─");
+    }
+    attroff(COLOR_PAIR(110));
+    attron(COLOR_PAIR(50));
     if(timer < 6){
         if(n == 1)
-            mvprintw(1 , 2 , "!*!*! YOU FOUND 1 GOLD !*!*!");
+            mvprintw(1 , COLS/2 - 14 , "!*!*! YOU FOUND 1 GOLD !*!*!");
         if(n == 2)
-            mvprintw(1 , 2 , "!*!*! YOU FOUND BLACK GOLD !*!*!");
+            mvprintw(1 , COLS/2 - 16 , "!*!*! YOU FOUND BLACK GOLD !*!*!");
         if(n == 3)
-            mvprintw(1 , 2 , "!*!*! ENEMY IS ATTACKING YOU !*!*!");
+            mvprintw(1 , COLS/2 - 17 , "!*!*! ENEMY IS ATTACKING YOU !*!*!");
         if(n == 4)
-            mvprintw(1 , 2 , "!*!*! YOU SUCCESSFULLY KILLED THE ENEMY !*!*!");
+            mvprintw(1 , COLS/2 - 23 , "!*!*! YOU SUCCESSFULLY KILLED THE ENEMY !*!*!");
         if(n == 5)
-            mvprintw(1 , 2 , "!*!*! YOUR BLOW HIT THE ENEMY !*!*!");
+            mvprintw(1 , COLS/2 - 18 , "!*!*! YOUR BLOW HIT THE ENEMY !*!*!");
         if(n == 6)
-            mvprintw(1 , 2 , "!*!*! YOU DON'T HAVE ENOUGH WEAPONS !*!*!");
+            mvprintw(1 , COLS/2 - 21 , "!*!*! YOU DON'T HAVE ENOUGH WEAPONS !*!*!");
         if(n == 7)
-            mvprintw(1 , 2 , "!*!*! FIRST CHOOSE YOUR WEAPON !*!*!");
+            mvprintw(1 , COLS/2 - 18 , "!*!*! FIRST CHOOSE YOUR WEAPON !*!*!");
         if(n == 8)
-            mvprintw(1 , 2 , "!*!*! YOU FOUND A WEAPON !*!*!");
+            mvprintw(1 , COLS/2 - 15, "!*!*! YOU FOUND A WEAPON !*!*!");
         if(n == 9)
-            mvprintw(1 , 2 , "!*!*! YOU KILLED AN ENEMY !*!*!");
+            mvprintw(1 , COLS/2 - 16 , "!*!*! YOU KILLED AN ENEMY !*!*!");
         
 
     }
@@ -3737,6 +3815,13 @@ void treasure_room(Game * g){
 void profile(Game * g){
     clear();
     if(g->name[0] == '\0'){
+        // init_pair(100 , COLOR_YELLOW , COLOR_BLACK);
+        // attron(COLOR_PAIR(100));
+        // mvprintw(1 , 1 , "%s" , "\U00002588");
+        // mvprintw(1 , 2 , "%s" , "\U00002588");
+        // mvprintw(2 , 1 , "%s" , "\U00002588");
+        // mvprintw(2 , 2 , "%s" , "\U00002588");
+        // attroff(COLOR_PAIR(100));
         mvprintw(LINES/2 - 11 , COLS/2 - 29  ,"       (**)                                         (**)");
         mvprintw(LINES/2 - 10 , COLS/2 - 29 , "       IIII                                         IIII");
         mvprintw(LINES/2 - 9 , COLS/2 - 29 , "       ####                                         ####");

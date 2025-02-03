@@ -697,12 +697,7 @@ void random_map(Game *g , int spell , int treasure){
             g->map[i*(COLS) + home2[j].x] = '|';
         }
     }
-    for(int i = 0 ; i < 6 ; i++){
-        g->map[loc_to_int(home1[i])] = '{';
-        g->map[loc_to_int(home2[i])] = '}';
-        g->map[home1[i].y*COLS + home2[i].x] = ']';
-        g->map[home2[i].y*COLS + home1[i].x] = '[';
-    }
+
     //random ways
     if (spell==0){
         int random = rand()%6;
@@ -1470,41 +1465,49 @@ void handle_move(Game *g){
             g->start_payam = time(NULL);
             g->payam = 2;
             g->map[loc_to_int(g->player)] = '.';
+            g->start_payam = time(NULL);
         }
         else if(g->map[loc_to_int(g->player)] == 'k'){
             g->selah[1] += 12;
             g->map[loc_to_int(g->player)] = '.';
             g->payam = 8;
+            g->start_payam = time(NULL);
         }
         else if(g->map[loc_to_int(g->player)] == 'b'){
             g->selah[1] += 1;
             g->map[loc_to_int(g->player)] = '.';
             g->payam = 8;
+            g->start_payam = time(NULL);
         }
         else if(g->map[loc_to_int(g->player)] == 'a'){
             g->selah[2] += 8;
             g->map[loc_to_int(g->player)] = '.';
             g->payam = 8;
+            g->start_payam = time(NULL);
         }
         else if(g->map[loc_to_int(g->player)] == 'c'){
             g->selah[2] += 1;
             g->map[loc_to_int(g->player)] = '.';
             g->payam = 8;
+            g->start_payam = time(NULL);
         }
         else if(g->map[loc_to_int(g->player)] == 's'){
             g->selah[3] = 1;
             g->map[loc_to_int(g->player)] = '.';
             g->payam = 8;
+            g->start_payam = time(NULL);
         }
         else if(g->map[loc_to_int(g->player)] == 't'){
             g->selah[4] += 20;
             g->map[loc_to_int(g->player)] = '.';
             g->payam = 8;
+            g->start_payam = time(NULL);
         }
         else if(g->map[loc_to_int(g->player)] == 'd'){
             g->selah[4] += 1;
             g->map[loc_to_int(g->player)] = '.';
             g->payam = 8;
+            g->start_payam = time(NULL);
         }
         else if(g->map[loc_to_int(g->player)] == '0'){
             g->telesmha[0] += 1;
@@ -2406,18 +2409,22 @@ void draw_map(Game *g){
             mvprintw(i/COLS , i%COLS , "%c" , g->map[i]);
             if(g->map[i] == '#')
                 mvprintw(i/COLS , i%COLS , "%s" , "\U00002592");
+
             if(g->map[i] == '|')
                 mvprintw(i/COLS , i%COLS , "%s" , "│");
             if(g->map[i] == '_')
                 mvprintw(i/COLS , i%COLS , "%s" , "─");
-            if(g->map[i] == '{')
-                mvprintw(i/COLS , i%COLS , "%s" , "┌");
-            if(g->map[i] == '}')
-                mvprintw(i/COLS , i%COLS , "%s" , "┘");
-            if(g->map[i] == '[')
-                mvprintw(i/COLS , i%COLS , "%s" , "└");
-            if(g->map[i] == ']')
-                mvprintw(i/COLS , i%COLS , "%s" , "┐");
+
+            for(int j = 0 ; j < 6; j++){
+                if(loc_to_int(g->homes[j][0]) == i)
+                    mvprintw(i/COLS , i%COLS , "%s" , "┌");
+                if(loc_to_int(g->homes[j][1]) == i)
+                    mvprintw(i/COLS , i%COLS , "%s" , "┘");
+                if(g->homes[j][0].y*COLS + g->homes[j][1].x == i)
+                    mvprintw(i/COLS , i%COLS , "%s" , "┐");
+                if(g->homes[j][1].y*COLS + g->homes[j][0].x == i)
+                    mvprintw(i/COLS , i%COLS , "%s" , "└");
+            }
 
             if((g->under_map[i] == 'S')&&(g->map[i] == '.'))
                 attroff(COLOR_PAIR(4));
@@ -3631,6 +3638,7 @@ void treasure_room(Game * g){
         g->show_map[COLS * (LINES/2 - 10) + i] = '.';
         g->show_map[COLS * (LINES/2 + 10) + i] = '.';
     }
+
 
     for(int i = LINES/2 -10 ; i < LINES/2 + 11 ; i++){
         for(int j = COLS/2 -17 ; j< COLS/2 + 18 ; j++)

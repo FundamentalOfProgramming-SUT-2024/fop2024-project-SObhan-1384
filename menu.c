@@ -697,6 +697,12 @@ void random_map(Game *g , int spell , int treasure){
             g->map[i*(COLS) + home2[j].x] = '|';
         }
     }
+    for(int i = 0 ; i < 6 ; i++){
+        g->map[loc_to_int(home1[i])] = '{';
+        g->map[loc_to_int(home2[i])] = '}';
+        g->map[home1[i].y*COLS + home2[i].x] = ']';
+        g->map[home2[i].y*COLS + home1[i].x] = '[';
+    }
     //random ways
     if (spell==0){
         int random = rand()%6;
@@ -1468,30 +1474,37 @@ void handle_move(Game *g){
         else if(g->map[loc_to_int(g->player)] == 'k'){
             g->selah[1] += 12;
             g->map[loc_to_int(g->player)] = '.';
+            g->payam = 8;
         }
         else if(g->map[loc_to_int(g->player)] == 'b'){
             g->selah[1] += 1;
             g->map[loc_to_int(g->player)] = '.';
+            g->payam = 8;
         }
         else if(g->map[loc_to_int(g->player)] == 'a'){
             g->selah[2] += 8;
             g->map[loc_to_int(g->player)] = '.';
+            g->payam = 8;
         }
         else if(g->map[loc_to_int(g->player)] == 'c'){
             g->selah[2] += 1;
             g->map[loc_to_int(g->player)] = '.';
+            g->payam = 8;
         }
         else if(g->map[loc_to_int(g->player)] == 's'){
             g->selah[3] = 1;
             g->map[loc_to_int(g->player)] = '.';
+            g->payam = 8;
         }
         else if(g->map[loc_to_int(g->player)] == 't'){
             g->selah[4] += 20;
             g->map[loc_to_int(g->player)] = '.';
+            g->payam = 8;
         }
         else if(g->map[loc_to_int(g->player)] == 'd'){
             g->selah[4] += 1;
             g->map[loc_to_int(g->player)] = '.';
+            g->payam = 8;
         }
         else if(g->map[loc_to_int(g->player)] == '0'){
             g->telesmha[0] += 1;
@@ -1760,6 +1773,11 @@ void handle_weapon(Game * g){
                     g->payam = 5;
                     if(g->current_telesm == 2)
                         g->enemy[i].joon -= 5;
+                    if(g->enemy[i].joon < 1){
+                        g->payam = 9;
+                        g->point += 5;
+                        g->start_payam = time(NULL);
+                    }
                     
                 }
                 else{
@@ -1779,6 +1797,11 @@ void handle_weapon(Game * g){
                     g->payam = 5;
                     if(g->current_telesm == 2)
                         g->enemy[i].joon -= 10;
+                    if(g->enemy[i].joon < 1){
+                        g->payam = 9;
+                        g->point += 5;
+                        g->start_payam = time(NULL);
+                    }
                 }
                 else{
                     g->start_payam = time(NULL);
@@ -1810,6 +1833,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 12;
                             i = 10;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -1839,6 +1867,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 12;
                             i = 10;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -1868,6 +1901,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 12;
                             i = 10;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -1898,6 +1936,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 12;
                             i = 10;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -1940,6 +1983,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 15;
                             i = 20;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -1970,6 +2018,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 15;
                             i = 20;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -2000,6 +2053,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 15;
                             i = 20;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -2030,6 +2088,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 15;
                             i = 20;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -2069,6 +2132,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 5;
                             i = 10;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -2098,6 +2166,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 5;
                             i = 10;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -2127,6 +2200,11 @@ void handle_weapon(Game * g){
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 5;
                             i = 10;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             
                             break;
                         }
@@ -2157,6 +2235,11 @@ void handle_weapon(Game * g){
                             shelik = 1;
                             if(g->current_telesm == 2)
                                 g->enemy[j].joon -= 5;
+                            if(g->enemy[i].joon < 1){
+                                g->payam = 9;
+                                g->point += 5;
+                                g->start_payam = time(NULL);
+                            }
                             break;
                         }
                     } 
@@ -2172,6 +2255,10 @@ void handle_weapon(Game * g){
             g->start_payam = time(NULL);
             g->payam = 6;
         }
+    }
+    if(g->current_selah == -1){
+        g->payam = 7;
+        g->start_payam = time(NULL);
     }
 
 }
@@ -2239,6 +2326,14 @@ void draw_map(Game *g){
                 attron(COLOR_PAIR(3));
             else if((g->under_map[i] == 'S')&&(g->map[i] == '+'))
                 attron(COLOR_PAIR(3));
+            else if((g->under_map[i] == 'S')&&(g->map[i] == '['))
+                attron(COLOR_PAIR(3));
+            else if((g->under_map[i] == 'S')&&(g->map[i] == ']'))
+                attron(COLOR_PAIR(3));
+            else if((g->under_map[i] == 'S')&&(g->map[i] == '{'))
+                attron(COLOR_PAIR(3));
+            else if((g->under_map[i] == 'S')&&(g->map[i] == '}'))
+                attron(COLOR_PAIR(3));
             else if((g->under_map[i] == 'T')&&(g->map[i] == '.'))
                 attron(COLOR_PAIR(1));
             else if((g->under_map[i] == 'T')&&(g->map[i] == '|'))
@@ -2246,6 +2341,14 @@ void draw_map(Game *g){
             else if((g->under_map[i] == 'T')&&(g->map[i] == '_'))
                 attron(COLOR_PAIR(4));
             else if((g->under_map[i] == 'T')&&(g->map[i] == '+'))
+                attron(COLOR_PAIR(4));
+            else if((g->under_map[i] == 'T')&&(g->map[i] == '['))
+                attron(COLOR_PAIR(4));
+            else if((g->under_map[i] == 'T')&&(g->map[i] == ']'))
+                attron(COLOR_PAIR(4));
+            else if((g->under_map[i] == 'T')&&(g->map[i] == '{'))
+                attron(COLOR_PAIR(4));
+            else if((g->under_map[i] == 'T')&&(g->map[i] == '}'))
                 attron(COLOR_PAIR(4));
             else if((g->under_map[i] == 'T')&&(g->map[i] == '*'))
                 attron(COLOR_PAIR(1));
@@ -2279,6 +2382,14 @@ void draw_map(Game *g){
                 attron(COLOR_PAIR(1));
             else if((g->under_map[i] == 0)&&(g->map[i] == '|'))
                 attron(COLOR_PAIR(1));
+            else if((g->under_map[i] == 0)&&(g->map[i] == '['))
+                attron(COLOR_PAIR(1));
+            else if((g->under_map[i] == 0)&&(g->map[i] == ']'))
+                attron(COLOR_PAIR(1));
+            else if((g->under_map[i] == 0)&&(g->map[i] == '{'))
+                attron(COLOR_PAIR(1));
+            else if((g->under_map[i] == 0)&&(g->map[i] == '}'))
+                attron(COLOR_PAIR(1));
             else if((g->under_map[i] == 0)&&(g->map[i] == '_'))
                 attron(COLOR_PAIR(1));
             else if((g->under_map[i] == 0)&&(g->map[i] == '+'))
@@ -2295,6 +2406,18 @@ void draw_map(Game *g){
             mvprintw(i/COLS , i%COLS , "%c" , g->map[i]);
             if(g->map[i] == '#')
                 mvprintw(i/COLS , i%COLS , "%s" , "\U00002592");
+            if(g->map[i] == '|')
+                mvprintw(i/COLS , i%COLS , "%s" , "│");
+            if(g->map[i] == '_')
+                mvprintw(i/COLS , i%COLS , "%s" , "─");
+            if(g->map[i] == '{')
+                mvprintw(i/COLS , i%COLS , "%s" , "┌");
+            if(g->map[i] == '}')
+                mvprintw(i/COLS , i%COLS , "%s" , "┘");
+            if(g->map[i] == '[')
+                mvprintw(i/COLS , i%COLS , "%s" , "└");
+            if(g->map[i] == ']')
+                mvprintw(i/COLS , i%COLS , "%s" , "┐");
 
             if((g->under_map[i] == 'S')&&(g->map[i] == '.'))
                 attroff(COLOR_PAIR(4));
@@ -2356,6 +2479,30 @@ void draw_map(Game *g){
                 attroff(COLOR_PAIR(1));
             else if((g->under_map[i] == '?')&&(g->map[i] == '|'))
                 attroff(COLOR_PAIR(1));
+            else if((g->under_map[i] == 0)&&(g->map[i] == '['))
+                attroff(COLOR_PAIR(1));
+            else if((g->under_map[i] == 0)&&(g->map[i] == ']'))
+                attroff(COLOR_PAIR(1));
+            else if((g->under_map[i] == 0)&&(g->map[i] == '{'))
+                attroff(COLOR_PAIR(1));
+            else if((g->under_map[i] == 0)&&(g->map[i] == '}'))
+                attroff(COLOR_PAIR(1));
+            else if((g->under_map[i] == 'T')&&(g->map[i] == '['))
+                attroff(COLOR_PAIR(4));
+            else if((g->under_map[i] == 'T')&&(g->map[i] == ']'))
+                attroff(COLOR_PAIR(4));
+            else if((g->under_map[i] == 'T')&&(g->map[i] == '{'))
+                attroff(COLOR_PAIR(4));
+            else if((g->under_map[i] == 'T')&&(g->map[i] == '}'))
+                attroff(COLOR_PAIR(4));
+            else if((g->under_map[i] == 'S')&&(g->map[i] == '['))
+                attroff(COLOR_PAIR(3));
+            else if((g->under_map[i] == 'S')&&(g->map[i] == ']'))
+                attroff(COLOR_PAIR(3));
+            else if((g->under_map[i] == 'S')&&(g->map[i] == '{'))
+                attroff(COLOR_PAIR(3));
+            else if((g->under_map[i] == 'S')&&(g->map[i] == '}'))
+                attroff(COLOR_PAIR(3));
             if(g->map[i] == 'P'){
                 attron(COLOR_PAIR(3));
                 mvprintw(i/COLS , i%COLS , "%s" , "\U000003A6");
@@ -2647,7 +2794,7 @@ void start_game(Game *g){
     if(g->levels == 1)
         medium_game(g);
     if(g->levels == 2)
-        medium_game(g);
+        hard_game(g);
     
 }
 
@@ -3373,9 +3520,8 @@ void printf_payam(Game * g){
     init_pair(50 , 40 , COLOR_BLACK);
 //rgb(0, 254, 131)
     attron(COLOR_PAIR(50));
-    attron(A_BLINK);
     int n = g->payam;
-    if(timer < 10){
+    if(timer < 6){
         if(n == 1)
             mvprintw(1 , 2 , "!*!*! YOU FOUND 1 GOLD !*!*!");
         if(n == 2)
@@ -3389,28 +3535,32 @@ void printf_payam(Game * g){
         if(n == 6)
             mvprintw(1 , 2 , "!*!*! YOU DON'T HAVE ENOUGH WEAPONS !*!*!");
         if(n == 7)
-            mvprintw(1 , 2 , "!*!*! First choose your weapon !*!*!");
+            mvprintw(1 , 2 , "!*!*! FIRST CHOOSE YOUR WEAPON !*!*!");
+        if(n == 8)
+            mvprintw(1 , 2 , "!*!*! YOU FOUND A WEAPON !*!*!");
+        if(n == 9)
+            mvprintw(1 , 2 , "!*!*! YOU KILLED AN ENEMY !*!*!");
+        
 
     }
     attroff(COLOR_PAIR(50));
-    attroff(A_BLINK);
 
     //rgb(251, 255, 0)
 
-    init_color(41 , 251 , 255 , 0);
-    init_pair(51 , 41 , COLOR_BLACK);
+    // init_color(41 , 251 , 255 , 0);
+    // init_pair(51 , 41 , COLOR_BLACK);
 
-    attron(COLOR_PAIR(51));
+    // attron(COLOR_PAIR(51));
 
-    //mvprintf(0 , 0 , "|");
-    mvprintw(1 , 0 , "|");
-    for(int i = 0 ; i<50 ; i++){
-        mvprintw(0 , i , "_");
-        mvprintw(2 , i , "_");
-    }
-    mvprintw(1 , 49 , "|");
+    // //mvprintf(0 , 0 , "|");
+    // mvprintw(1 , 0 , "|");
+    // for(int i = 0 ; i<50 ; i++){
+    //     mvprintw(0 , i , "_");
+    //     mvprintw(2 , i , "_");
+    // }
+    // mvprintw(1 , 49 , "|");
 
-    attroff(COLOR_PAIR(51));
+    // attroff(COLOR_PAIR(51));
 }
 
 void lose_page(Game * g){
@@ -3637,7 +3787,7 @@ void profile(Game * g){
         mvprintw(LINES/2 - 3 , COLS/2 - 29 , "|/``  .`\\/`.  ``\\|                           |/``  .`\\/`.  ``\\|");
         mvprintw(LINES/2 - 2 , COLS/2 - 29 , "`     }    {     '                           `     }    {  ");
         mvprintw(LINES/2 - 1 , COLS/2 - 29 , "      ) () (                                       ) () (");
-        mvprintw(LINES/2 - 1 , COLS/2 - 29 , "                       Experience: %d" , tajrobe);
+        mvprintw(LINES/2 - 1 , COLS/2 - 29 , "      ) () (           Experience: %d" , tajrobe);
         mvprintw(LINES/2  , COLS/2 - 29 , "      ( :: )                                       ( :: )");
         mvprintw(LINES/2 +1 , COLS/2 - 29 , "      | :: |                                       | :: |");
         mvprintw(LINES/2 +1 , COLS/2 - 29 , "      | :: |           Total Golds: %d" , tala);

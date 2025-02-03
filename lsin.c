@@ -49,7 +49,7 @@ void username(char name[55]){
         attroff(COLOR_PAIR(3));
         init_pair(2 , 2 , COLOR_YELLOW);
         attron(COLOR_PAIR(2));
-        mvprintw(LINES/2 - 1 , COLS/2 - 37  , "*** You can only use letters, numbers and dashes in your username ***");
+        mvprintw(LINES/2 - 1 , COLS/2 - 35  , "*** You can only use letters, numbers and dashes in your username ***");
         attroff(COLOR_PAIR(2));
         echo();
         curs_set(TRUE);
@@ -112,7 +112,8 @@ void password(char password[55]){
         borderdesign();
         attroff(COLOR_PAIR(3));
         attron(COLOR_PAIR(2));
-        mvprintw(LINES/2 - 1 , COLS/2 - 37  , "*** Your password must contain lowercase and uppercase and numbers ***");
+        mvprintw(LINES/2 - 1 , COLS/2 - 35  , "*** Your password must contain lowercase and uppercase and numbers ***");
+        mvprintw(LINES/2 , COLS/2 - 29  , "*** Enter the word random to get a password suggestion ***");
         attroff(COLOR_PAIR(2));
         
         echo();
@@ -120,12 +121,42 @@ void password(char password[55]){
         mvscanw(LINES/2 - 3 , COLS/2 + 1 ,"%s" , password);
         curs_set(FALSE);
         noecho();
-        if(strlen(password) < 7){
+        if((strlen(password) < 7)&&(strcmp(password , "random") != 0)){
             clear();
             attron(A_BLINK );
             mvprintw(LINES/2 - 5 , COLS/2 - 35 , "!*!*! The entered password must contain at least 7 characters !*!*!");
             attroff(A_BLINK);
             refresh();
+        }
+        else if(strcmp(password , "random") == 0){
+            char * suggest = calloc(13 , sizeof(char));
+            suggest[13] = '\0';
+            int rand_capital = rand()%4 + 1;
+            int rand_small = rand()%4 + 1;
+            while(rand_capital > 0){
+                int rand_capital_index = rand()%12;
+                if(suggest[rand_capital_index] == 0){
+                    suggest[rand_capital_index] = rand()%26 + 65;
+                    rand_capital -= 1;
+                }
+            }
+            while(rand_small > 0){
+                int rand_small_index = rand()%12;
+                if(suggest[rand_small_index] == 0){
+                    suggest[rand_small_index] = rand()%26 + 97;
+                    rand_small -= 1;
+                }
+            }
+
+            for(int i = 0 ; i < 12 ; i++){
+                if(suggest[i] == 0){
+                    suggest[i] = rand()%10 + 48;
+                }
+            }
+            clear();
+            mvprintw( LINES/2 - 5 , COLS/2 - 16 , "Password suggestion: %s" , suggest);
+            refresh();
+
         }
         else{
             if(password_check(password) == 0){

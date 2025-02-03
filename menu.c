@@ -232,10 +232,10 @@ int first_menu(Game *g){
             break;
     }
     if(choice == 1){
-        log_in(g);
+        sign_in(g);
     }
     if(choice == 0)
-        sign_in(g);
+        log_in(g);
     if(choice == 2)
         g->name[0] = '\0';
     

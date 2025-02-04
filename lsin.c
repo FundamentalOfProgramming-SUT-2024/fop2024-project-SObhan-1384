@@ -267,6 +267,7 @@ void sign_password(char *username , char *password){
                 if(strcmp(user , username) == 0){
                     clear();
                     mvprintw(LINES/2 - 5 , COLS/2 - 14 , "Your password starts with %c%c" , pass[0] , pass[1]);
+                    fclose(file);
                     break;
                 }
             }

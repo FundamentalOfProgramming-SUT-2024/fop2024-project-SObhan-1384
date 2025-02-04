@@ -185,6 +185,20 @@ void log_in(Game *g){
         g->name[i] = esm[i];
     }
 
+    char *filename = calloc(60 , sizeof(char));
+    for(int i = 0 ; i < strlen(g->name) ; i++)
+        filename[i] = g->name[i];
+    
+    filename[strlen(g->name)] = '.';
+    filename[strlen(g->name) + 1] = 't';
+    filename[strlen(g->name) + 2] = 'x';
+    filename[strlen(g->name) + 3] = 't';
+    filename[strlen(g->name) + 4] = '\0';
+
+    FILE * file_avalie = fopen(filename , "w");
+    fprintf(file_avalie , "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+    fclose(file_avalie);
+
     clear();
     refresh();  
 }
@@ -1308,8 +1322,8 @@ void handle_move(Game *g){
                 break;
             } 
             if(g->map[loc_to_int(g->player)] == 'P'){
-                win_page(g);
-                g->end = 1;
+                g->end = 2;
+                treasure_room(g);
                 break;
             }  
             if(g->under_map[loc_to_int(g->player)] == 'x'){
@@ -1440,8 +1454,6 @@ void handle_move(Game *g){
         g->end =2;
     }
     if(g->map[loc_to_int(g->player)] == 'Q'){
-        g->golds += 30;
-        g->point += 100;
         win_page(g);
         g->end =1;
     }
@@ -2851,6 +2863,8 @@ void start_game(Game *g){
 
 void win_page(Game *g){
     g->tabaghe = 0;
+    g->point += 50;
+    g->golds += 30;
 
     if(g->name[0] != 0){
         char *filename = calloc(60 , sizeof(char));

@@ -509,7 +509,7 @@ void scoreboard(Game *g){
     while(1){
         init_pair(1 , COLOR_MAGENTA , COLOR_BLACK);
         attron(COLOR_PAIR(1));
-        mvprintw(3 , 18 , "USERNAME  |  SCORES  | GOLDS | EXPERIENCE ");
+        mvprintw(3 , COLS/2 - 49 , "USERNAME                                         SCORES |GOLDS  |EXPERIENCE ");
         attroff(COLOR_PAIR(1));
         int rotbe = 1;
         init_color(23 , 500 , 400 , 20);
@@ -524,21 +524,33 @@ void scoreboard(Game *g){
             
             if(rotbe == 1){
                 attron(COLOR_PAIR(30));
-                mvprintw(5 + i , 6 , "%s LEGENDRY   %s     %d     %d     %d" , "\U0001F947", new_names[i] , new_scores[i] , new_golds[i] , experience[i]);
+                mvprintw(5 + i , COLS/2 - 63 , "%s LEGENDRY   %s" , "\U0001F947", new_names[i]);
+                mvprintw(5+ i , COLS/2 , "%d" ,  new_scores[i]);
+                mvprintw(5 + i , COLS/2 + 8 , "%d" , new_golds[i]);
+                mvprintw(5 + i , COLS/2 + 16 , "%d" , experience[i]);
                 attroff(COLOR_PAIR(30));
             }
             if(rotbe == 2){
                 attron(COLOR_PAIR(31));
-                mvprintw(5 + i , 2 , "%s GRAND MASTER   %s     %d     %d     %d" , "\U0001F948", new_names[i] , new_scores[i] , new_golds[i] , experience[i]);
+                mvprintw(5 + i , COLS/2 - 67 , "%s GRAND MASTER   %s" , "\U0001F948", new_names[i]);
+                mvprintw(5+ i , COLS/2 , "%d" ,  new_scores[i]);
+                mvprintw(5 + i , COLS/2 + 8 , "%d" , new_golds[i]);
+                mvprintw(5 + i , COLS/2 + 16 , "%d" , experience[i]);
                 attroff(COLOR_PAIR(31));
             }
             if(rotbe == 3){
                 attron(COLOR_PAIR(32));
-                mvprintw(5 + i , 8 , "%s MASTER   %s     %d     %d     %d" , "\U0001F949", new_names[i] , new_scores[i] , new_golds[i] , experience[i]);
+                mvprintw(5 + i , COLS/2 - 61 , "%s MASTER   %s" , "\U0001F949", new_names[i]);
+                mvprintw(5+ i , COLS/2 , "%d" ,  new_scores[i]);
+                mvprintw(5 + i , COLS/2 + 8 , "%d" , new_golds[i]);
+                mvprintw(5 + i , COLS/2 + 16 , "%d" , experience[i]);
                 attroff(COLOR_PAIR(32));
             }
             if(rotbe > 3)
-                mvprintw(5 + i , 20 , "%s     %d     %d     %d" , new_names[i] , new_scores[i] , new_golds[i] , experience[i]);
+                mvprintw(5 + i , COLS/2 - 49 , "%s" , new_names[i]);
+                mvprintw(5+ i , COLS/2 , "%d" ,  new_scores[i]);
+                mvprintw(5 + i , COLS/2 + 8 , "%d" , new_golds[i]);
+                mvprintw(5 + i , COLS/2 + 16 , "%d" , experience[i]);
             
             if(strcmp(g->name , new_names[i]) == 0)
                 attroff(A_BLINK | A_ITALIC);
@@ -565,6 +577,11 @@ void second_menu(Game *rogue){
     noecho();
     while(1){
         clear();
+        mvprintw(LINES/2 - 10 , COLS/2 - 17 , " ____    ___    ____  _   _  _____");
+        mvprintw(LINES/2 - 9 , COLS/2 - 17 , "|  _ \\  / _ \\  / ___|| | | || ____|");
+        mvprintw(LINES/2 - 8 , COLS/2 - 17 , "| |_) || | | || |  _ | | | ||  _|  ");
+        mvprintw(LINES/2 - 7 , COLS/2 - 17 , "|  _ < | |_| || |_| || |_| || |___ ");
+        mvprintw(LINES/2 - 6 , COLS/2 - 17 , "|_| \\_\\ \\___/  \\____| \\___/ |_____|");
         for(int i = 0 ; i < 5 ; i++){
             if(i == choice)
                 attron(A_REVERSE);
@@ -2599,7 +2616,7 @@ void draw_map(Game *g){
     attroff(COLOR_PAIR(120));
     char *taslihat[6]= {"Nothing" , "Gorz" , "Khanjar" , "Asaa" , "Shamshir" , "Tir"};
     char *unicodes[6]= {":(" , "\U00002692" , "\U0001F5E1", "\U0001FA84" , "\U00002694" , "\U000027B3"};
-    mvprintw(LINES - 2 , 100 , "Current weapon: %s %s" , taslihat[g->current_selah + 1] , unicodes[g->current_selah + 1]);
+    mvprintw(LINES - 2 , 100 , "Current weapon: %s %s" , taslihat[g->current_selah + 1] , unicodes[g->current_selah + 1] );
     char * ability[4] = {"Nothing" , "Nothing" , "Speed" , "Damage"};
     mvprintw(LINES - 2 , 128 , "Current Ability: %s" , ability[g->current_telesm + 1]);
 
@@ -2827,7 +2844,7 @@ void hard_game(Game *g){
         g->sec_5 = time(NULL);
         g->sec_1 = time(NULL);
         g->start_telesm = time(NULL);
-        g->health = 45;
+        g->health = 30;
         g->hunger = 10;
         g->current_selah = 0;
         g->current_telesm = -1;
@@ -3059,8 +3076,9 @@ void selah_menu(Game *g){
         mvprintw(LINES/2 - 3 , COLS/2 - 7, "Kootah bord:");
         mvprintw(LINES/2 - 2 , COLS/2 - 4, "Gorz %d" , g->selah[0]);
         mvprintw(LINES/2 - 1 , COLS/2 - 4, "Shamshir %d" , g->selah[3]);
-        mvprintw(LINES/2 , COLS/2 - 4, "Tir %d" , g->selah[4]);
-        mvprintw(LINES/2 + 2 , COLS/2 - 7, "Boland bord:");
+        //mvprintw(LINES/2 , COLS/2 - 4, "Tir %d" , g->selah[4]);
+        mvprintw(LINES/2 + 1 , COLS/2 - 7, "Boland bord:");
+        mvprintw(LINES/2 +2, COLS/2 - 4, "Tir %d" , g->selah[4]);
         mvprintw(LINES/2 + 3, COLS/2 - 4, "Khanjar %d" , g->selah[1]);
         mvprintw(LINES/2 + 4, COLS/2 - 4, "Asaa %d" , g->selah[2]);
 
@@ -3695,8 +3713,15 @@ void lose_page(Game * g){
 
     while(1){
         clear();
-        mvprintw(LINES/2 - 3 , COLS/2 -6 , "%s YOU LOSE%s" , "\U0001F62D" , "\U0001F62D");
-        mvprintw(LINES/2 -1 , COLS/2 - 25, "!*!*! To return to the menu , press q button !*!*!");
+    mvprintw(LINES/2 - 10 , COLS/2 - 34 ,"╔═════════════════════════════════════════════════════════════════╗");
+    mvprintw(LINES/2 - 9 , COLS/2 - 34 , "║        _  __   _____  _   _   _     ___  ____  _____   _        ║");
+    mvprintw(LINES/2 - 8 , COLS/2 - 34 , "║__/\\__ | | \\ \\ / / _ \\| | | | | |   / _ \\/ ___|| ____| | | __/\\__║");
+    mvprintw(LINES/2 - 7 , COLS/2 - 34 , "║\\    / | |  \\ V / | | | | | | | |  | | | \\___ \\|  _|   | | \\    /║");
+    mvprintw(LINES/2 - 6 , COLS/2 - 34 , "║/_  _\\ |_|   | || |_| | |_| | | |__| |_| |___) | |___  |_| /_  _\\║");
+    mvprintw(LINES/2 - 5 , COLS/2 - 34 , "║  \\/   (_)   |_| \\___/ \\___/  |_____\\___/|____/|_____| (_)   \\/  ║");
+    mvprintw(LINES/2 - 4 , COLS/2 - 34 , "╚═════════════════════════════════════════════════════════════════╝");
+        mvprintw(LINES/2  , COLS/2 -6 , "%s YOU LOSE%s" , "\U0001F62D" , "\U0001F62D");
+        mvprintw(LINES/2 + 2 , COLS/2 - 25, "!*!*! To return to the menu , press q button !*!*!");
             char a = getch();
             if(a == 'q'){
                 break;

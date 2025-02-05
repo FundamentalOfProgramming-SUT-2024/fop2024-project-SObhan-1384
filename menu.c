@@ -217,13 +217,27 @@ void sign_in(Game *g){
 }
 
 int first_menu(Game *g){
+    clear();
     start_color();
     init_pair(1 , COLOR_MAGENTA, COLOR_BLACK);
-    attron(COLOR_PAIR(1));
     const char *firstmenu[3]= {"Sign in" , "Log in" , "Guest"};
     int choice = 0;
+    init_pair(150 , COLOR_MAGENTA , COLOR_BLACK);
+    init_pair(151, COLOR_WHITE , COLOR_BLACK);
+    init_pair(152 , COLOR_YELLOW , COLOR_BLACK);
+    int random_color = rand()%3;
+    attron(COLOR_PAIR(150 + random_color));
+    for(int i = 0 ; i < LINES ; i++){
+        int randblock = 3 + rand()%40;
+        for(int j = 0 ; j < randblock ; j++){
+            mvprintw(i , j , "%s" , "\U00002588");
+            mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+        }
+    }
+    attroff(COLOR_PAIR(150 + random_color));
+    attron(COLOR_PAIR(1));
     while(1){
-        clear();
+        //clear();
         mvprintw(LINES/2 - 10 , COLS/2 - 17 , " ____    ___    ____  _   _  _____");
         mvprintw(LINES/2 - 9 , COLS/2 - 17 , "|  _ \\  / _ \\  / ___|| | | || ____|");
         mvprintw(LINES/2 - 8 , COLS/2 - 17 , "| |_) || | | || |  _ | | | ||  _|  ");
@@ -257,6 +271,14 @@ int first_menu(Game *g){
 }
 
 void music(Game *g){
+    clear();
+    for(int i = 0 ; i < LINES ; i++){
+        int randblock = 3 + rand()%40;
+        for(int j = 0 ; j < randblock ; j++){
+            mvprintw(i , j , "%s" , "\U00002588");
+            mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+        }
+    }
     char *song[3]= {"Sacrifice, The Weeknd" , "Carry on Wayward Son, Kansas" , "Mohreye Mar, Saeed asayesh"};
     init_pair(1 , COLOR_MAGENTA, COLOR_BLACK);
     init_pair(3 , COLOR_BLACK , COLOR_YELLOW);
@@ -266,26 +288,27 @@ void music(Game *g){
     int final_choice = g->song;
     while(1){
         attron(COLOR_PAIR(1));
-        clear();
+        //clear();
         for(int i = 0 ; i <3 ; i ++){
             if(i == choice)
                 attron(A_REVERSE);
-            mvprintw(LINES/2 -3 + i , COLS/2 -10 ,"%s" , song[i]);
+            mvprintw(LINES/2 -3 + i , COLS/2 -11 ,"%s" , song[i]);
             if(i == choice)
                 attroff(A_REVERSE);
         }
         if(g->playing == 0){
-            mvprintw(LINES/2 , COLS/2 - 5, "Music: OFF");
+            mvprintw(LINES/2 + 1, COLS/2 - 5, "Music: OFF");
         }
         if(g->playing == 1){
-            mvprintw(LINES/2 , COLS/2 - 5, "Music: ON");
+            mvprintw(LINES/2 + 1, COLS/2 - 5, "Music: ON");
         }
         init_pair(2 , COLOR_BLACK , COLOR_YELLOW);
         attron(COLOR_PAIR(2));
-        mvprintw(LINES/2 - 5 , COLS/2 - 10 , "%s" , song[final_choice]);
+        mvprintw(LINES/2 - 5 , COLS/2 - 11 , "%s" , song[final_choice]);
         attroff(COLOR_PAIR(2));
         attron(COLOR_PAIR(3));
-        mvprintw(LINES/2 - 7 , COLS/2 - 11 , "*** Pess 'q' to exit ***");
+        mvprintw(LINES/2 - 7 , COLS/2 - 12 , "*** Pess 'q' to exit ***");
+        mvprintw(LINES/2 + 3 , COLS/2 - 15,"press 'x' to turn ON/OFF music");
         attroff(COLOR_PAIR(3));
         int a = getch();
         if(a == 'q'){
@@ -297,16 +320,49 @@ void music(Game *g){
         if((a == KEY_DOWN))
             choice = (choice + 1)%3;
         if(a == 'x'){
+            clear();
             g->playing = (g->playing +1)%2;
+            attron(COLOR_PAIR(1));
+            for(int i = 0 ; i < LINES ; i++){
+                int randblock = 3 + rand()%40;
+                for(int j = 0 ; j < randblock ; j++){
+                    mvprintw(i , j , "%s" , "\U00002588");
+                    mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+                }
+            }
+            attroff(COLOR_PAIR(1));
         }
         if(a == '\n'){
+            clear();
             final_choice = choice;
             g->song = final_choice;
+            attron(COLOR_PAIR(1));
+            for(int i = 0 ; i < LINES ; i++){
+                int randblock = 3 + rand()%40;
+                for(int j = 0 ; j < randblock ; j++){
+                    mvprintw(i , j , "%s" , "\U00002588");
+                    mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+                }
+            }
+            attroff(COLOR_PAIR(1));
         }
     }
 }
 
 void color(Game *g){
+    clear();
+    for(int i = 0 ; i < LINES ; i++){
+        int randblock = 3 + rand()%40;
+        for(int j = 0 ; j < randblock ; j++){
+            mvprintw(i , j , "%s" , "\U00002588");
+            mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+        }
+    }
+    init_pair(200 , COLOR_WHITE , COLOR_BLACK);
+    init_pair(201 , COLOR_RED , COLOR_BLACK);
+    init_pair(202 , COLOR_GREEN , COLOR_BLACK);
+    init_pair(203 , COLOR_YELLOW , COLOR_BLACK);
+    init_pair(204 , COLOR_BLUE , COLOR_BLACK);
     char *colors[5]= {"WHITE" , "RED" , "GREEN" , "YELLOW" , "BLUE"};
     init_pair(1 , COLOR_MAGENTA, COLOR_BLACK);
     noecho();
@@ -315,7 +371,7 @@ void color(Game *g){
     int choice = 0;
     int final_choice = g->color;
     while(1){
-        clear();
+        //clear();
         attron(COLOR_PAIR(1));
         for(int i = 0 ; i <5 ; i ++){
             if(i == choice)
@@ -341,14 +397,32 @@ void color(Game *g){
         else if(a == KEY_DOWN)
             choice = (choice + 1)%5;
         else if(a == '\n'){
+            clear();
             final_choice = choice;
             g->color = final_choice;
+            attron(COLOR_PAIR(200 + g->color));
+            for(int i = 0 ; i < LINES ; i++){
+                int randblock = 3 + rand()%40;
+                for(int j = 0 ; j < randblock ; j++){
+                    mvprintw(i , j , "%s" , "\U00002588");
+                    mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+                }
+            }
+            attroff(COLOR_PAIR(200 + g->color));
         }
         refresh();
     }
 }
 
 void dif(Game *g){
+    clear();
+    for(int i = 0 ; i < LINES ; i++){
+        int randblock = 3 + rand()%40;
+        for(int j = 0 ; j < randblock ; j++){
+            mvprintw(i , j , "%s" , "\U00002588");
+            mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+        }
+    }
     char *difs[3]= {"Easy" , "Medium" , "Hard"};
     init_pair(1 , COLOR_MAGENTA, COLOR_BLACK);
     noecho();
@@ -357,12 +431,11 @@ void dif(Game *g){
     int choice = 0;
     int final_choice = g->levels;
     while(1){
-        clear();
         attron(COLOR_PAIR(1));
         for(int i = 0 ; i <3 ; i ++){
             if(i == choice)
                 attron(A_REVERSE);
-            mvprintw(LINES/2 -3 + i , COLS/2 -2 ,"%s" , difs[i]);
+            mvprintw(LINES/2 -3 + i , COLS/2 -3 ,"%s" , difs[i]);
             if(i == choice)
                 attroff(A_REVERSE);
         }
@@ -383,8 +456,18 @@ void dif(Game *g){
         else if(a == KEY_DOWN)
             choice = (choice + 1)%3;
         else if(a == '\n'){
+            clear();
             final_choice = choice;
             g->levels = final_choice;
+            attron(COLOR_PAIR(1));
+            for(int i = 0 ; i < LINES ; i++){
+                int randblock = 3 + rand()%40;
+                for(int j = 0 ; j < randblock ; j++){
+                    mvprintw(i , j , "%s" , "\U00002588");
+                    mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+                }
+            }
+            attroff(COLOR_PAIR(1));
         }
         refresh();
     }
@@ -395,6 +478,13 @@ void settings(Game *g){
     start_color();
     init_pair(1 , COLOR_MAGENTA, COLOR_BLACK);
     attron(COLOR_PAIR(1));
+    for(int i = 0 ; i < LINES ; i++){
+        int randblock = 3 + rand()%40;
+        for(int j = 0 ; j < randblock ; j++){
+            mvprintw(i , j , "%s" , "\U00002588");
+            mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+        }
+    }
     char *set[3] = {"Difficulity" , "Color" , "Song"};
     init_pair(2 , COLOR_BLACK , COLOR_YELLOW);
     attron(COLOR_PAIR(2));
@@ -407,7 +497,7 @@ void settings(Game *g){
         for(int i = 0 ; i < 3 ; i++){
             if(i == choice_set)
                 attron(A_REVERSE);
-            mvprintw(LINES/2 -3 + i , COLS/2 -4 ,"%s" , set[i]);
+            mvprintw(LINES/2 -3 + i , COLS/2 - 6,"%s" , set[i]);
             if(i == choice_set)
                 attroff(A_REVERSE);
         }
@@ -571,12 +661,25 @@ void second_menu(Game *rogue){
     clear();
     start_color();
     init_pair(1 , COLOR_MAGENTA, COLOR_BLACK);
-    attron(COLOR_PAIR(1));
     const char* secondmenu[5] = {"New game" , "Previous game" ,  "Score Board" , "Profile" , "Settings"};
     int choice = 0;
+    init_pair(150 , COLOR_MAGENTA , COLOR_BLACK);
+    init_pair(151, COLOR_WHITE , COLOR_BLACK);
+    init_pair(152 , COLOR_YELLOW , COLOR_BLACK);
+    int random_color = rand()%3;
+    attron(COLOR_PAIR(150 + random_color));
+    for(int i = 0 ; i < LINES ; i++){
+        int randblock = 3 + rand()%40;
+        for(int j = 0 ; j < randblock ; j++){
+            mvprintw(i , j , "%s" , "\U00002588");
+            mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+        }
+    }
+    attroff(COLOR_PAIR(150 + random_color));
+    attron(COLOR_PAIR(1));
     noecho();
     while(1){
-        clear();
+        //clear();
         mvprintw(LINES/2 - 10 , COLS/2 - 17 , " ____    ___    ____  _   _  _____");
         mvprintw(LINES/2 - 9 , COLS/2 - 17 , "|  _ \\  / _ \\  / ___|| | | || ____|");
         mvprintw(LINES/2 - 8 , COLS/2 - 17 , "| |_) || | | || |  _ | | | ||  _|  ");
@@ -3455,8 +3558,16 @@ void resume_game(Game * g){
     sscanf(khat, "%s" , test);
 
     if((strcmp(test , "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa") == 0) || (g->name[0] == '\0')){
+        clear();
+        for(int i = 0 ; i < LINES ; i++){
+            int randblock = 3 + rand()%40;
+            for(int j = 0 ; j < randblock ; j++){
+                mvprintw(i , j , "%s" , "\U00002588");
+                mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+            }
+        }
         while(1){
-            clear();
+            //clear();
             mvprintw(LINES/2 -3 , COLS/2 - 23 , "!*!*! There's no previous game to resume !*!*!");
             mvprintw(LINES/2 -1 , COLS/2 - 25, "!*!*! To return to the menu , press q button !*!*!");
             char a = getch();
@@ -3865,6 +3976,13 @@ void treasure_room(Game * g){
 
 void profile(Game * g){
     clear();
+    for(int i = 0 ; i < LINES ; i++){
+        int randblock = 3 + rand()%40;
+        for(int j = 0 ; j < randblock ; j++){
+            mvprintw(i , j , "%s" , "\U00002588");
+            mvprintw(i , COLS - randblock + j , "%s" , "\U00002588");
+        }
+    }
     if(g->name[0] == '\0'){
         // init_pair(100 , COLOR_YELLOW , COLOR_BLACK);
         // attron(COLOR_PAIR(100));

@@ -600,6 +600,7 @@ void scoreboard(Game *g){
         init_pair(1 , COLOR_MAGENTA , COLOR_BLACK);
         attron(COLOR_PAIR(1));
         mvprintw(3 , COLS/2 - 49 , "USERNAME                                         SCORES |GOLDS  |EXPERIENCE ");
+        mvprintw(3 , COLS/2 - 71 , "RANK");
         attroff(COLOR_PAIR(1));
         int rotbe = 1;
         init_color(23 , 500 , 400 , 20);
@@ -636,11 +637,13 @@ void scoreboard(Game *g){
                 mvprintw(5 + i , COLS/2 + 16 , "%d" , experience[i]);
                 attroff(COLOR_PAIR(32));
             }
-            if(rotbe > 3)
+            if(rotbe > 3){
                 mvprintw(5 + i , COLS/2 - 49 , "%s" , new_names[i]);
                 mvprintw(5+ i , COLS/2 , "%d" ,  new_scores[i]);
                 mvprintw(5 + i , COLS/2 + 8 , "%d" , new_golds[i]);
                 mvprintw(5 + i , COLS/2 + 16 , "%d" , experience[i]);
+            }
+            mvprintw(5+i , COLS/2 - 69 , "%d" , rotbe);
             
             if(strcmp(g->name , new_names[i]) == 0)
                 attroff(A_BLINK | A_ITALIC);
@@ -1680,6 +1683,7 @@ void handle_move(Game *g){
         }
 
     }
+
 
     if(a == 'i')
         selah_menu(g);
@@ -3083,10 +3087,14 @@ void draw_health(Game *g){
         if((timer_health >= 1)){
             if(g->hunger < 5){
                 g->health -= 1;
+                if(g->under_map[loc_to_int(g->player)] == 'S')
+                    g->health -= 1;
             }
             else{
                 if(g->health < 60)
                     g->health += 1;
+                    if(g->under_map[loc_to_int(g->player)] == 'S')
+                        g->health -= 1;
             }
             g->sec_1 = time(NULL);
         }
